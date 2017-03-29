@@ -1,4 +1,5 @@
 <?php
+namespace app\lib;
 
 class View
 {
@@ -11,8 +12,7 @@ class View
             extract($data);
         }
         */
-
-        include BP . "/app/views/" . $this->getLayout();
+        include BP . "/views/" . $this->getLayout();
     }
 
     public function setLayout($layout)

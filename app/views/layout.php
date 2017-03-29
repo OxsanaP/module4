@@ -9,7 +9,7 @@
     <title>Главная</title>
 </head>
 <body>
-<?php include BP . "/app/views/". $contentView; ?>
+<?php include BP . "/views/". trim($contentView); ?>
 <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

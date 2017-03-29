@@ -1,6 +1,10 @@
 <?php
-class Controller {
+namespace app\lib;
 
+use app\lib\View;
+
+class Controller
+{
     public $model;
     public $view;
     protected $_layout = "layout.php";

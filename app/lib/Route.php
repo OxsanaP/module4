@@ -1,8 +1,9 @@
 <?php
+namespace app\lib;
 
 class Route
 {
-    public static function match()
+    public static function  match()
     {
         // default action and controller
         $controllerName = 'Index';
@@ -20,31 +21,19 @@ class Route
             $actionName = $routes[2];
         }
         $controllerName = ucfirst(strtolower($controllerName));
-        $modelName = $controllerName . "Model";
         $controllerName .=  'Controller';
         $actionName = strtolower($actionName) . 'Action';
 
-        $modelPath = BP . "/app/models/" . $modelName . '.php';
-        if (file_exists($modelPath)) {
-            include $modelPath;
+        $class = "app\\controllers\\" . $controllerName;
+        if (!class_exists($class)){
+            die ('404 Not Found');
         }
 
-        $controllerPath = BP . "/app/controllers/" . $controllerName . '.php';
-        if (file_exists($controllerPath)) {
-            include $controllerPath;
-        } else {
-          Route::errorPage404();
+        $controller = new $class();
+        if (is_callable(array($controller, $actionName)) == false) {
+            die ('404 Not Found');
         }
-
-        $controller = new $controllerName;
-        $action = $actionName;
-
-        if (method_exists($controller, $action)) {
-            $controller->$action();
-        } else {
-            Route::errorPage404();
-        }
-
+        $controller->$actionName();
     }
 
     public static function errorPage404()
