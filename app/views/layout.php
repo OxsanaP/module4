@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <meta charset="UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,9 @@
     <title>Главная</title>
 </head>
 <body>
-<?php include BP . "/views/". trim($contentView); ?>
+    <div class="container">
+        <?php include BP . "/views/". trim($contentView); ?>
+    </div>
 <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

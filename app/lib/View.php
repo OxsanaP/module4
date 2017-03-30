@@ -7,11 +7,10 @@ class View
 
     public function generate($contentView, $data = null)
     {
-        /*
+
         if(is_array($data)) {
             extract($data);
         }
-        */
         include BP . "/views/" . $this->getLayout();
     }
 
