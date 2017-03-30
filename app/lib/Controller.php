@@ -2,20 +2,33 @@
 namespace app\lib;
 
 use app\lib\View;
+use app\lib\Http;
 
 class Controller
 {
-    public $model;
-    public $view;
+
+    protected $_view;
     protected $_layout = "layout.php";
+    protected $_requst;
 
     function __construct()
     {
-        $this->view = new View();
-        $this->view->setLayout($this->_layout);
+        $this->_view = new View();
+        $this->_view->setLayout($this->_layout);
+        $this->_requst = new Http();
     }
 
-    function indexAction()
+    /**
+     * @return \app\lib\Http
+     */
+    protected function getRequest()
     {
+        return $this->_requst;
+    }
+
+    public function setHeaderTitle($title)
+    {
+        $this->_view->setHeaderTitle($title);
+        return $this;
     }
 }

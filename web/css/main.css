@@ -1,0 +1,41 @@
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0;
+ }
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.well{
+    margin-bottom: 0px;
+}
+
+.unit-rubric__title a{
+    color: #c60304;
+
+}
+.col-md-6 {
+    padding: 5px;
+}
+
+.category-news{
+
+}
+.category-news-container{
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+.news{
+    padding-left: 10px;
+}
+.category-news-container h3 a{
+    color:black;
+}

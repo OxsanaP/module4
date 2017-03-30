@@ -21,4 +21,10 @@ class AbstractModel
         $result = $this->getConnection()->query($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function fetchOne($sql)
+    {
+        $result = $this->getConnection()->query($sql);
+        return mysqli_fetch_assoc($result);
+    }
 }

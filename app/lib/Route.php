@@ -8,17 +8,17 @@ class Route
         // default action and controller
         $controllerName = 'Index';
         $actionName = 'index';
-
-        $routes = explode('/', $_SERVER['REQUEST_URI']);
+        $url = explode('?', substr(strtolower($_SERVER['REQUEST_URI']), 1));
+        $routes = explode('/', $url[0]);
 
         // get controller name
-        if (!empty($routes[1])) {
-            $controllerName = $routes[1];
+        if (!empty($routes[0])) {
+            $controllerName = $routes[0];
         }
 
         // get action name
-        if (!empty($routes[2])) {
-            $actionName = $routes[2];
+        if (!empty($routes[1])) {
+            $actionName = $routes[1];
         }
         $controllerName = ucfirst(strtolower($controllerName));
         $controllerName .=  'Controller';
