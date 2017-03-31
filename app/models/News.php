@@ -9,11 +9,15 @@ class News extends AbstractModel
     {
         $sql = "SELECT * FROM `news`
           LEFT JOIN category_news ON news_id = news.id 
-          where category_news.category_id= {$categoryId}
+          where category_news.category_id= :categoryId
           order by news.create_at
-          LIMIT {$offset} , {$limit}" ;
-
-        return $this->query($sql);
+          LIMIT :offset , :limit" ;
+        $params = array(
+            'categoryId' => $categoryId,
+            'offset' => $offset,
+            'limit' => $limit,
+        );
+        return $this->query($sql, $params);
     }
 
 }

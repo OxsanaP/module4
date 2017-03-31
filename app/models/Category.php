@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use app\models\AbstractModel;
@@ -27,13 +28,13 @@ class Category extends AbstractModel
 
     public function load($id)
     {
-        return $this->fetchOne("SELECT * FROM {$this->_tableName} where id={$id}");
+        return $this->fetchOne("SELECT * FROM {$this->_tableName} where id=:id", array('id' => $id));
     }
 
     public function getCategoryNews($categoryId, $limit, $page = 0)
     {
-        if($page>0){
-            $offset = $page-1;
+        if ($page > 0) {
+            $offset = $page - 1;
         }
         $offset = $offset * $limit;
 
@@ -43,7 +44,8 @@ class Category extends AbstractModel
 
     public function getCountCategoryNews($id)
     {
-        $result = $this->fetchOne("SELECT count(*) as count FROM category_news where category_id={$id}");
+        $result = $this->fetchOne("SELECT count(*) as count FROM category_news where category_id=:id",
+            array('id' => $id));
         return $result['count'];
     }
 

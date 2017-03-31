@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use app\lib\Db;
@@ -16,15 +17,31 @@ class AbstractModel
         return $this->_connection;
     }
 
-    public function query($sql)
+    public function query($sql, $params = array())
     {
-        $result = $this->getConnection()->query($sql);
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $stmt = $this->_getStatement($sql, $params);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function fetchOne($sql)
+    public function fetchOne($sql, $params = array())
     {
-        $result = $this->getConnection()->query($sql);
-        return mysqli_fetch_assoc($result);
+        $stmt = $this->_getStatement($sql, $params);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param $sql
+     * @param $params
+     * @return \PDOStatement
+     */
+    protected function _getStatement($sql, $params)
+    {
+        if (empty($params)) {
+            $stmt = $this->getConnection()->query($sql);
+        } else {
+            $stmt = $this->getConnection()->prepare($sql);
+            $stmt->execute($params);
+        }
+        return $stmt;
     }
 }

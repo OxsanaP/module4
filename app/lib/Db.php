@@ -1,4 +1,5 @@
 <?php
+
 namespace app\lib;
 
 class Db
@@ -18,10 +19,15 @@ class Db
     private function __construct()
     {
         // TODO add catch Exception
-        $this->_connection = new \mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        if(\mysqli_connect_error()){
-            throw new \Exception("Cann't conect to DB.");
-        }
+        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8";
+        $opt = [
+            \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+            \PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
+
+        $this->_connection = new \PDO($dsn, DB_USER, DB_PASS, $opt);
+        //$this->_connection->setFetchMode(\PDO::FETCH_ASSOC);
         $this->_connection->query('SET NAMES utf8');
         $this->_connection->query('SET CHARACTER SET utf8');
         $this->_connection->query('SET COLLATION_CONNECTION="utf8_general_ci"');
@@ -29,7 +35,7 @@ class Db
 
     public function getConnection()
     {
-       return $this->_connection;
+        return $this->_connection;
     }
 
     private function __clone()
