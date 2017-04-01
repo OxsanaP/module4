@@ -2,7 +2,7 @@
 <?php if (isset($news) && count($news) > 0) : ?>
     <?php foreach ($news as $value) : ?>
         <div class="row news">
-            <div class="col-md-12"><a><?php echo $this->upperFirstLetter($value['title']) ?></a></div>
+            <div class="col-md-12"><a href="/news?id=<?php echo $value['id'] ?>"><?php echo $this->upperFirstLetter($value['title']) ?></a></div>
         </div>
     <?php endforeach; ?>
     <?php $paginator = $this->getParams()->paginator; ?>

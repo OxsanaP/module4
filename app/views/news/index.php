@@ -20,6 +20,15 @@
             <strong>Сейчас смотрят: </strong><span class="news-view"><?php echo $this->getParams()->nowRead; ?></span>
         </div>
     </div>
+    <?php if (isset($this->getParams()->tags)) : ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?php foreach ($this->getParams()->tags as $tag): ?>
+                    <span><a href="/tag?id=<?php echo $tag['id'] ?>"><?php echo $tag['name'] ?></a></span>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
     <script>
         jQuery(document).ready(function () {
             setInterval(function () {
@@ -36,7 +45,7 @@
                         jQuery('.news-view').html(data.data.curViewed)
                     }
                 });
-            },3000);
+            }, 3000);
         });
     </script>
 <?php endif; ?>

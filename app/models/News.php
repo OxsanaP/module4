@@ -12,7 +12,7 @@ class News extends AbstractModel
         $sql = "SELECT * FROM {$this->_tableName}
           LEFT JOIN category_news ON news_id = news.id 
           where category_news.category_id= :categoryId
-          order by news.create_at
+          order by news.create_at DESC 
           LIMIT :offset , :limit";
         $params = array(
             'categoryId' => $categoryId,
@@ -22,10 +22,6 @@ class News extends AbstractModel
         return $this->query($sql, $params);
     }
 
-    public function load($id)
-    {
-        return $this->fetchOne("SELECT * FROM {$this->_tableName} where id=:id", array('id' => $id));
-    }
 
     public function updateViewed($id, $count)
     {
@@ -46,4 +42,23 @@ class News extends AbstractModel
         return $this->query($sql, $params);
     }
 
+    public function getNewsByTagId($id)
+    {
+        $sql = "SELECT * FROM {$this->_tableName}
+          JOIN tag_news ON news_id = {$this->_tableName}.id 
+          where tag_news.tag_id= :tagId
+          order by news.create_at DESC";
+        $params = array('tagId' => $id);
+        return $this->query($sql, $params);
+    }
+
+    public function getCountNewsByTagId($id)
+    {
+        $sql = "SELECT COUNT(*) as count FROM {$this->_tableName}
+          JOIN tag_news ON news_id = {$this->_tableName}.id 
+          where tag_news.tag_id= :tagId";
+        $params = array('tagId' => $id);
+        $result = $this->fetchOne($sql, $params);
+        return $result['count'];
+    }
 }

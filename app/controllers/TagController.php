@@ -2,12 +2,11 @@
 namespace app\controllers;
 
 use app\lib\Controller;
-use app\models\Category;
+use app\models\Tag;
+use app\models\News;
 
-class CategoryController extends Controller
+class TagController extends Controller
 {
-
-
     function indexAction()
     {
         $id = $this->getRequest()->getParam('id', false);
@@ -15,23 +14,23 @@ class CategoryController extends Controller
         if (!$id) {
             return $this->redirectTo404();
         }
-        $model = new Category();
-        $category = $model->load($id);
-
-        if (empty($category)) {
+        $tagModel = new Tag();
+        $tag = $tagModel->load($id);
+        if (empty($tag)) {
             return $this->redirectTo404();
         }
-        $news = $model->getCategoryNews($id, $this->_getPaginatorCountPerPage(), $curPage);
-        $count = $model->getCountCategoryNews($id);
-        $paginator = $this->_getPaginatorParams($curPage, $count);
-        $paginator["url"] = "/category?id={$id}&page=";
+        $model = new News();
+        $news = $model->getNewsByTagId($id);
 
+        $count = $model->getCountNewsByTagId($id);
+        $paginator = $this->_getPaginatorParams($curPage, $count);
+
+        $paginator["url"] = "/tag?id={$id}&page=";
         $params = array(
             "news" => $news,
             "paginator" => $paginator,
         );
-        $this->setHeaderTitle($category["name"]);
+        $this->setHeaderTitle("News for tag {$tag['name']}");
         $this->_view->render('category/index', $params);
-
     }
 }

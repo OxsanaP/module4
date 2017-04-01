@@ -26,11 +26,6 @@ class Category extends AbstractModel
         return $this->query("SELECT * FROM {$this->_tableName} where parent_id is null order by id");
     }
 
-    public function load($id)
-    {
-        return $this->fetchOne("SELECT * FROM {$this->_tableName} where id=:id", array('id' => $id));
-    }
-
     public function getCategoryNews($categoryId, $limit, $page = 0)
     {
         if ($page > 0) {

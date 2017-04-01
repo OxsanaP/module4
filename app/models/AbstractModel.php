@@ -66,4 +66,9 @@ class AbstractModel
         $condParams = array_merge($values, $condParams);
         $stmt->execute($condParams);
     }
+
+    public function load($id)
+    {
+        return $this->fetchOne("SELECT * FROM {$this->_tableName} where id=:id", array('id' => $id));
+    }
 }
