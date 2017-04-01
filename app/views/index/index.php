@@ -14,7 +14,7 @@
                     <?php endif; ?>
                     <?php foreach ($category['news'] as $news) : ?>
                         <div class="row news">
-                            <div class="col-md-12"><?php echo $news['title'] ?></div>
+                            <div class="col-md-12"><a href="/news?id=<?php echo $news['id'] ?>"><?php echo $this->upperFirstLetter($news['title']) ?></></a></div>
                         </div>
                     <?php endforeach; ?>
                 </div>

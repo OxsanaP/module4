@@ -13,7 +13,7 @@ class IndexController extends Controller
         $categories = $category->getCategoriesForMain();
         $params = array("categories"=>$categories);
         $this->setHeaderTitle("Мои новости");
-        $this->_view->generate('index/index.php', $params);
+        $this->_view->render('index/index', $params);
 
     }
 }

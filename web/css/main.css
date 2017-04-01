@@ -41,3 +41,17 @@ body {
 .category-news-container h3 a{
     color:black;
 }
+
+.news-content {
+    text-align: justify;
+}
+
+.news-content .main-image {
+    display: block;
+    min-width: 100px;
+    min-height: 100px;
+    padding: 5px;
+    margin: 5px;
+    float: left;
+
+}

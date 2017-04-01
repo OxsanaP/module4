@@ -8,13 +8,13 @@ class View
     protected $_template;
     protected $_params;
 
-    public function generate($template, $data = null)
+    public function render($template, $data = null)
     {
 
         if (is_array($data)) {
             $object = new \StdClass;
-            foreach ($data as $key=>$value){
-                $object->{$key}=$value;
+            foreach ($data as $key => $value) {
+                $object->{$key} = $value;
             }
             $this->setParams($object);
         }
@@ -46,7 +46,7 @@ class View
 
     protected function setTemplate($template)
     {
-        $this->_template= $template;
+        $this->_template = $template . '.php';
         return $this;
     }
 
@@ -57,7 +57,7 @@ class View
 
     protected function setParams($params)
     {
-        $this->_params= $params;
+        $this->_params = $params;
         return $this;
     }
 
@@ -68,6 +68,14 @@ class View
 
     public function getContent()
     {
-        include BP . "/views/". trim($this->getTemplate());
+        include BP . "/views/" . trim($this->getTemplate());
     }
+
+    public function upperFirstLetter($str, $encoding = 'UTF8')
+    {
+        return
+            mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding) .
+            mb_substr($str, 1, mb_strlen($str, $encoding), $encoding);
+    }
+
 }

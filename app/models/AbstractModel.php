@@ -7,6 +7,7 @@ use app\lib\Db;
 class AbstractModel
 {
     protected $_connection = null;
+    protected $_tableName = "";
 
     public function getConnection()
     {
@@ -43,5 +44,26 @@ class AbstractModel
             $stmt->execute($params);
         }
         return $stmt;
+    }
+
+    protected function pdoSet($allowed, &$values)
+    {
+        $set = '';
+        foreach ($allowed as $key => $field) {
+            if (isset($values[$field])) {
+                $set .= "`" . str_replace("`", "``", $field) . "`" . "=:$field, ";
+            } else {
+                unset($values[$key]);
+            }
+        }
+        return substr($set, 0, -2);
+    }
+
+    protected function update($allowed, $values, $cond, $condParams)
+    {
+        $sql = "UPDATE {$this->_tableName} SET " . $this->pdoSet($allowed, $values) . " WHERE $cond";
+        $stmt = $this->getConnection()->prepare($sql);
+        $condParams = array_merge($values, $condParams);
+        $stmt->execute($condParams);
     }
 }

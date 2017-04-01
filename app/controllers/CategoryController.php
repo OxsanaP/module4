@@ -40,7 +40,7 @@ class CategoryController extends Controller
             "paginator" => $paginator,
         );
         $this->setHeaderTitle($category["name"]);
-        $this->_view->generate('category/index.php', $params);
+        $this->_view->render('category/index', $params);
 
     }
 }
