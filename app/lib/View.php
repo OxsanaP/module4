@@ -78,4 +78,9 @@ class View
             mb_substr($str, 1, mb_strlen($str, $encoding), $encoding);
     }
 
+    public function cutText($str, $len, $encoding = 'UTF8')
+    {
+        return mb_substr($str, 0, $len, $encoding);
+    }
+
 }

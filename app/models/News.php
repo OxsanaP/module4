@@ -9,7 +9,7 @@ class News extends AbstractModel
 
     public function getCategoryNews($categoryId, $limit, $offset = 0)
     {
-        $sql = "SELECT * FROM `news`
+        $sql = "SELECT * FROM {$this->_tableName}
           LEFT JOIN category_news ON news_id = news.id 
           where category_news.category_id= :categoryId
           order by news.create_at
@@ -36,8 +36,14 @@ class News extends AbstractModel
         $cond = "id = :id";
         $condParams = array('id' => (int)$id);
         $this->update($allowed, $values, $cond, $condParams);
-
         return $count;
+    }
+
+    public function getSliderData()
+    {
+        $sql = "SELECT * FROM {$this->_tableName} where image is not null order by news.create_at  DESC LIMIT 0 , :limit";
+        $params = array('limit' => 4);
+        return $this->query($sql, $params);
     }
 
 }
