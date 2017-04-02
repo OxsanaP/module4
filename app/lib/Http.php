@@ -42,4 +42,9 @@ class Http
     {
         return $this->__get($key);
     }
+
+    public function getPrevUrl()
+    {
+        return $_SERVER['HTTP_REFERER'];
+    }
 }

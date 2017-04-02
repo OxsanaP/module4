@@ -7,6 +7,7 @@ class View
     protected $_headerTitle;
     protected $_template;
     protected $_params;
+    protected $_session;
 
     public function render($template, $data = null)
     {
@@ -83,4 +84,26 @@ class View
         return mb_substr($str, 0, $len, $encoding);
     }
 
+    protected function getSession()
+    {
+        if (null === $this->_session) {
+            $this->_session = new Session();
+        }
+        return $this->_session;
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->getSession()->getErrorMessage();
+    }
+
+    public function isLogined()
+    {
+        return $this->getSession()->isLogined();
+    }
+
+    public function getCurrentUserName()
+    {
+        return $this->getSession()->getUserName();
+    }
 }

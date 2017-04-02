@@ -67,6 +67,13 @@ class AbstractModel
         $stmt->execute($condParams);
     }
 
+    protected function insert($allowed, $values)
+    {
+        $sql = "INSERT INTO {$this->_tableName} SET " . $this->pdoSet($allowed, $values);
+        $stmt = $this->getConnection()->prepare($sql);
+        $stmt->execute($values);
+    }
+
     public function load($id)
     {
         return $this->fetchOne("SELECT * FROM {$this->_tableName} where id=:id", array('id' => $id));

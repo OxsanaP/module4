@@ -25,7 +25,7 @@ class Route
         $actionName = strtolower($actionName) . 'Action';
 
         $class = "app\\controllers\\" . $controllerName;
-        if (!class_exists($class)){
+            if (!class_exists($class)){
             die ('404 Not Found');
         }
 

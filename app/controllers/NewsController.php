@@ -14,7 +14,7 @@ class NewsController extends Controller
             return $this->redirectTo404();
         }
         $model = new News();
-        $nowRead = rand(0, 5);
+        $nowRead = rand(1, 5);
         $model->updateViewed($id, $nowRead);
         $news = $model->load($id);
 
@@ -47,7 +47,7 @@ class NewsController extends Controller
             $data['errorMessage'] = "Новость не найдена";
         }
         if ($status == 'success') {
-            $nowRead = rand(0, 5);
+            $nowRead = rand(1, 5);
             $viewed = $model->updateViewed($id, $nowRead);
             $data['viewed'] = $viewed;
             $data['curViewed'] = $nowRead;
@@ -56,5 +56,15 @@ class NewsController extends Controller
         exit;
     }
 
-
+    public function searchAction()
+    {
+        $value = $this->getRequest()->getParam('q', false);
+        $result = array();
+        if ($value) {
+            $model = new Tag();
+            $result = $model->searchByName($value);
+        }
+        echo json_encode($result);
+        exit;
+    }
 }

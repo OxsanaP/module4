@@ -3,13 +3,15 @@ namespace app\lib;
 
 use app\lib\View;
 use app\lib\Http;
+use app\lib\Session;
 
 class Controller
 {
 
     protected $_view;
     protected $_layout = "layout.php";
-    protected $_requst;
+    protected $_request;
+    protected $_session = null;
 
     protected $_paginatorCountPerPage = 5;
 
@@ -17,7 +19,7 @@ class Controller
     {
         $this->_view = new View();
         $this->_view->setLayout($this->_layout);
-        $this->_requst = new Http();
+        $this->_request = new Http();
     }
 
     /**
@@ -25,7 +27,7 @@ class Controller
      */
     protected function getRequest()
     {
-        return $this->_requst;
+        return $this->_request;
     }
 
     public function setHeaderTitle($title)
@@ -34,9 +36,24 @@ class Controller
         return $this;
     }
 
+    protected function redirect($url)
+    {
+        header("Location: {$url}");
+        exit;
+    }
+
     protected function redirectTo404()
     {
+        //http_response_code(404);
         die ('404 Not Found');
+    }
+
+    protected function redirectTo405()
+    {
+//        http_response_code(405);
+//        header("Allow: POST");
+        die ("Method Not Allowed");
+
     }
 
     protected function _getPaginatorCountPerPage()
@@ -60,6 +77,14 @@ class Controller
             "countPages" => ceil($countItems/$count),
             "url" => ""
         );
+    }
+
+    protected function getSession()
+    {
+        if (null === $this->_session) {
+            $this->_session = new Session();
+        }
+        return $this->_session;
     }
 
 }
