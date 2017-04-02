@@ -1,6 +1,6 @@
 <?php
 namespace app\lib;
-
+use app\models\Comments;
 class View
 {
     protected $_layout;
@@ -102,8 +102,72 @@ class View
         return $this->getSession()->isLogined();
     }
 
+    public function getCurrentUserId()
+    {
+        return $this->getSession()->getUserId();
+    }
+
     public function getCurrentUserName()
     {
         return $this->getSession()->getUserName();
     }
+
+    public function getCommentData($id)
+    {
+        $html = '';
+        $data = $this->getParams()->comments;
+        if (!isset($data['other'][$id])) {
+            return '';
+        }
+        foreach ($data['other'][$id] as $comment) {
+            $html .='<div class="row">
+                <div class="col-sm-offset-1 col-md-11">
+                    <div class="comment">
+                        <p class="comment-header"> 
+                            <span class="comment-like">
+                            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" data-val="' . $comment['id'] . '"></span>
+                            <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" data-val="' . $comment['id'] . '"></span>
+                        </span>
+
+                        <strong>' . $comment['username'] . '</strong></p>
+<p class="comment-body">' . $comment['content'] . '</p>
+<p class="comment-footer">';
+if ($comment['user_id']== $this->getCurrentUserId()) {
+    $html .= '<a href="#" class="edit-comment" data-val="' . $comment['id'] . '" > Edit</a >';
+}
+$html .='<a href="#" class="reply-comment" data-val="' . $comment['id'] . '">Reply</a>
+<div class="row">
+    <form class="form-horizontal comment-form js-comment-form-' . $comment['id'] . '" method="POST" action="/comment/add">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="contentComment" class="col-sm-2 control-label">Comment</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="contentComment" name="content"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="hidden" name="news_id" value="' . $comment['news_id'] . '">
+                <input type="hidden" name="parent_id" value="' . $comment['id'] . '">
+                <button type="submit" class="btn btn-default">Add comment</button>
+            </div>
+        </div>
+    </form>
+</div>
+</p>
+</div>';
+            $html .= $this->getCommentData($comment['id']);
+            $html .= '</div>';
+            $html .= '</div>';
+        }
+        return $html;
+    }
+
+    public function getTop()
+    {
+        $model = new Comments();
+        return $model->getTopComentators();
+    }
+
 }

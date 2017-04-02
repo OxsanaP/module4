@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use app\lib\Controller;
 use app\models\User;
+use app\models\Comments;
 
 
 class UserController extends Controller
@@ -27,8 +28,6 @@ class UserController extends Controller
         $url = $this->getRequest()->getPrevUrl();
 
         setcookie("sid", "");
-
-        $username = $this->getRequest()->getParam("username");
         $email = $this->getRequest()->getParam("email");
         $password = $this->getRequest()->getParam("password");
         $remember = $this->getRequest()->getParam("remember-me");
@@ -56,5 +55,32 @@ class UserController extends Controller
 
         $this->redirect($url);
         return;
+    }
+
+    public function commentAction()
+    {
+        $id = $this->getRequest()->getParam('id', false);
+        $curPage = $this->getRequest()->getParam('page', 1);
+        if (!$id) {
+            return $this->redirectTo404();
+        }
+        $model = new Comments();
+        $comments = $model->load($id);
+
+        if (empty($comments)) {
+            return $this->redirectTo404();
+        }
+
+        $comments = $model->getCommentsByUserId($id, $this->_getPaginatorCountPerPage(), $curPage);
+        $count = $model->getCountCommentsByUserId($id);
+        $paginator = $this->_getPaginatorParams($curPage, $count);
+        $paginator["url"] = "/user/comment?id={$id}&page=";
+
+        $params = array(
+            "comments" => $comments,
+            "paginator" => $paginator,
+        );
+        $this->setHeaderTitle('Comments');
+        $this->_view->render('comment/byuser', $params);
     }
 }

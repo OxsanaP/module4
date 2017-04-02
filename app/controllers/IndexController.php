@@ -7,7 +7,7 @@ use app\models\News;
 
 class IndexController extends Controller
 {
-    function indexAction()
+    public function indexAction()
     {
         $category = new Category();
         $categories = $category->getCategoriesForMain();

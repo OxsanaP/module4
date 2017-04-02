@@ -41,4 +41,26 @@ class Session
         return '';
 
     }
+    public function getUserId()
+    {
+        if (isset($_SESSION['user_id'])){
+            return (int)$_SESSION['user_id'];
+        }
+        return false;
+    }
+
+    public function setValue($key, $value)
+    {
+        $_SESSION[$key] = $value;
+    }
+
+    public function fetchValue($key)
+    {
+        if (isset($_SESSION[$key])){
+            $val = $_SESSION[$key];
+            unset($_SESSION[$key]);
+            return $val;
+        }
+        return '';
+    }
 }

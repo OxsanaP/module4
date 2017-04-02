@@ -58,10 +58,35 @@
 <div class="container">
     <?php if ($errors = $this->getErrorMessage()) : ?>
         <?php foreach ($errors as $error) : ?>
-            <div class="alert alert-danger" role="alert"><?php echo  $error ?></div>
+            <div class="alert alert-danger" role="alert"><?php echo $error ?></div>
         <?php endforeach ?>
     <?php endif; ?>
-    <?php $this->getContent(); ?>
+    <div class="row">
+        <div class="col-md-2">
+            <?php if ($top = $this->getTop()) : ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Top Commentators</h4>
+                        <?php foreach ($top as $commentator) : ?>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a href="/user/comment?id=<?php echo $commentator['user_id'] ?>"><?php echo $commentator['username'] ?></a>
+                                </div>
+                                <div class="col-md-1">
+                                    <?php echo $commentator['count'] ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                </div>
+            <?php endif; ?>
+
+        </div>
+        <div class="col-md-8"><?php $this->getContent(); ?></div>
+        <div class="col-md-2"></div>
+    </div>
+
 </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -82,7 +107,8 @@
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-offset-2 col-sm-2 control-label">Password</label>
                         <div class="col-sm-5">
-                            <input type="password" class="form-control" name="password" id="inputPassword3" placeholder="Password">
+                            <input type="password" class="form-control" name="password" id="inputPassword3"
+                                   placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">

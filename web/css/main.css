@@ -130,3 +130,39 @@ a.control_next {
 .autocomplete-suggestion { position: relative; padding: 0 .6em; line-height: 23px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1.02em; color: #333; }
 .autocomplete-suggestion b { font-weight: normal; color: #1f8dd6; }
 .autocomplete-suggestion.selected { background: #f0f0f0; }
+
+.child-row{
+    margin-left: 0px;
+}
+
+.comment-body{
+    margin: 0px;
+}
+.comment{
+    margin: 1px;
+    border: 1px lightgrey solid;
+    border-radius: 25px;
+    padding: 2px;
+    padding-left: 10px;
+}
+
+.comment-header{
+    padding-top: 5px;
+}
+
+.comment-footer{
+    padding-right: 10px;
+    width: 100%;
+    text-align: right;
+}
+
+.comment-like{
+    padding-right: 5px;
+}
+
+.comment-form {
+    display: none;
+}
+.reply-comment {
+    padding: 2px;
+}

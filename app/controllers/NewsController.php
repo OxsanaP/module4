@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\lib\Controller;
 use app\models\News;
 use app\models\Tag;
+use app\models\Comments;
 
 class NewsController extends Controller
 {
@@ -26,11 +27,13 @@ class NewsController extends Controller
             $news['content'] = $model->trimContent($news['content']);
         }
 
+        $comments = new Comments();
         $tagModel = new Tag();
         $params = array(
             "news" => $news,
             "nowRead" => $nowRead,
             "tags" => $tagModel->getNewsTagsById($id),
+            "comments" => $comments->getComments($id)
         );
         $this->setHeaderTitle("");
         $this->_view->render('news/index', $params);
