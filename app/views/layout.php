@@ -81,10 +81,13 @@
 
                 </div>
             <?php endif; ?>
-
+            <?php include ('adsleft.php'); ?>
         </div>
         <div class="col-md-8"><?php $this->getContent(); ?></div>
-        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <?php include ('adsrigh.php'); ?>
+
+        </div>
     </div>
 
 </div>
@@ -130,6 +133,31 @@
     </div>
 </div>
 <script src="/js/bootstrap.min.js"></script>
+<script>
+    jQuery(document).on('mouseenter', '.ads-row', function () {
+        var element = jQuery(this).find('.price'),
+        price = element.find('.price-value');
+        price.data( "old", price.html() );
+        price.html(price.html() * 0.9);
+        element.data( "old-font", parseFloat(element.css('font-size')))
+        element.css('font-size', parseFloat(element.css('font-size'))+10 + 'px')
+        element.data( "old-color", element.css('color'))
+        element.css('color', 'red')
+        jQuery(this).find('.cupon').show('slow');
+    });
+
+    jQuery(document).on('mouseleave', '.ads-row', function () {
+        var element = jQuery(this).find('.price'),
+            price = element.find('.price-value');
+        price.html(price.data( "old"));
+        element.css('font-size', element.data("old-font") + 'px')
+        element.css('color', element.data("old-color"))
+        jQuery(this).find('.cupon').hide('slow');
+
+    });
+
+    mouseout
+</script>
 
 <div class="footer">
     <div class="navbar navbar-default navbar-fixed-bottom row-fluid">

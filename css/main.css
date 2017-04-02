@@ -166,3 +166,12 @@ a.control_next {
 .reply-comment {
     padding: 2px;
 }
+
+.ads-row {
+    border: 1px lightgrey solid;
+    padding: 2px;
+    margin: 1px;
+}
+.ads-row .cupon {
+    display: none;
+}
