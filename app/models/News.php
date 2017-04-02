@@ -61,4 +61,17 @@ class News extends AbstractModel
         $result = $this->fetchOne($sql, $params);
         return $result['count'];
     }
+
+    public function trimContent($content, $countSentenses = 5)
+    {
+        $data = explode('. ', $content);
+        $result = '';
+        if (count($data) <= $countSentenses) {
+            $countSentenses = count($data);
+        }
+        for ($i = 0; $i < $countSentenses; $i++) {
+            $result .= $data[$i] . '. ';
+        }
+        return $result;
+    }
 }

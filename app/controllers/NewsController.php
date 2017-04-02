@@ -21,6 +21,11 @@ class NewsController extends Controller
         if (empty($news)) {
             return $this->redirectTo404();
         }
+
+        if (!$this->getSession()->isLogined()) {
+            $news['content'] = $model->trimContent($news['content']);
+        }
+
         $tagModel = new Tag();
         $params = array(
             "news" => $news,

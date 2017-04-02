@@ -21,9 +21,14 @@ class Category extends AbstractModel
         return $categories;
     }
 
-    public function getCategories()
+    public function getAllCategories()
     {
         return $this->query("SELECT * FROM {$this->_tableName} where parent_id is null order by id");
+    }
+
+    public function getCategories()
+    {
+        return $this->query("SELECT * FROM {$this->_tableName} where parent_id is null and visible_on_menu = 1 order by id");
     }
 
     public function getCategoryNews($categoryId, $limit, $page = 0)
