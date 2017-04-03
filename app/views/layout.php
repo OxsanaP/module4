@@ -151,8 +151,6 @@
         jQuery(this).find('.cupon').hide('slow');
 
     });
-
-    mouseout
 </script>
 <?php include ('subscribe.php'); ?>
 <div class="footer">
@@ -160,7 +158,7 @@
         <div class="container-fluid">
             <div class="well well-sm">
                 <p>
-                <div>&copy; 2017 <a href="http://mod.loc">Мои новости</a> - Все права защищены</div>
+                <div>&copy; 2017 <a href="/">Мои новости</a> - Все права защищены</div>
                 </p>
             </div>
 
