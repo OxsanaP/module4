@@ -8,7 +8,7 @@
 
     <div class="row news-content">
         <div class="col-md-12">
-            <img class="main-image" src="<?php echo $news['image'] ?>">
+            <img class="main-image" width="200px" src="<?php echo $news['image'] ?>">
             <p><?php echo $news['content']; ?></p>
         </div>
     </div>

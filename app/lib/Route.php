@@ -11,20 +11,35 @@ class Route
         $url = explode('?', substr(strtolower($_SERVER['REQUEST_URI']), 1));
         $routes = explode('/', $url[0]);
 
-        // get controller name
-        if (!empty($routes[0])) {
-            $controllerName = $routes[0];
+        $area = '';
+        if (!empty($routes[0]) && ($routes[0] == 'admin') ) {
+            $area = 'Admin\\';
+            // get controller name
+            if (!empty($routes[1])) {
+                $controllerName = $routes[1];
+            }
+
+            // get action name
+            if (!empty($routes[2])) {
+                $actionName = $routes[2];
+            }
+        } else {
+            // get controller name
+            if (!empty($routes[0])) {
+                $controllerName = $routes[0];
+            }
+
+            // get action name
+            if (!empty($routes[1])) {
+                $actionName = $routes[1];
+            }
         }
 
-        // get action name
-        if (!empty($routes[1])) {
-            $actionName = $routes[1];
-        }
         $controllerName = ucfirst(strtolower($controllerName));
         $controllerName .=  'Controller';
         $actionName = strtolower($actionName) . 'Action';
 
-        $class = "app\\controllers\\" . $controllerName;
+        $class = "app\\controllers\\" . $area . $controllerName;
             if (!class_exists($class)){
             die ('404 Not Found');
         }

@@ -1,3 +1,30 @@
+<?php if (isset($this->getParams()->advanced)) : ?>
+<?php $advanced = $this->getParams()->advanced; ?>
+    <div class="row news">
+        <div class="col-md-12"><h4>Filtered by:</h4></div>
+    </div>
+    <?php if (!empty($advanced['start'])) : ?>
+        <div class="row news">
+            <div class="col-md-12"><strong>From: </strong><?php echo $advanced['start']?></div>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($advanced['end'])) : ?>
+        <div class="row news">
+            <div class="col-md-12"><strong>To: </strong><?php echo $advanced['end']?></div>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($advanced['category'])) : ?>
+        <div class="row news">
+            <div class="col-md-12"><strong>By category: </strong><?php echo $advanced['category']?></div>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($advanced['tags'])) : ?>
+        <div class="row news">
+            <div class="col-md-12"><strong>By tags: </strong><?php echo $advanced['tags']?></div>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+
 <?php $news = $this->getParams()->news; ?>
 <?php if (isset($news) && count($news) > 0) : ?>
     <?php foreach ($news as $value) : ?>

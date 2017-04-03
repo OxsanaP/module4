@@ -2,6 +2,7 @@
 namespace app\models;
 
 use app\models\AbstractModel;
+use app\models\Category;
 
 class News extends AbstractModel
 {
@@ -73,5 +74,44 @@ class News extends AbstractModel
             $result .= $data[$i] . '. ';
         }
         return $result;
+    }
+
+    public function addPost($params)
+    {
+        try {
+            $this->getConnection()->beginTransaction();
+
+            $allowed = array("title", "content", 'image');
+            $values = array(
+                'title' => $params['title'],
+                'content' => $params['content'],
+                'image' => $params['image']
+            );
+            $this->insert($allowed, $values);
+
+            $id = $this->getConnection()->lastInsertId();
+
+            $allowed = array('category_id', 'news_id');
+            foreach ($params['category'] as $category) {
+                $values = array('category_id' => $category, 'news_id' => $id);
+                $sql = "INSERT INTO category_news SET " . $this->pdoSet($allowed, $values);
+                $stmt = $this->getConnection()->prepare($sql);
+                $stmt->execute($values);
+            }
+
+            $allowed = array('tag_id', 'news_id');
+            foreach ($params['tags'] as $tag) {
+                $values = array('tag_id' => $tag, 'news_id' => $id);
+                $sql = "INSERT INTO tag_news SET " . $this->pdoSet($allowed, $values);
+                $stmt = $this->getConnection()->prepare($sql);
+                $stmt->execute($values);
+            }
+            $this->getConnection()->commit();
+            return true;
+        } catch (\PDOException $e) {
+            $this->getConnection()->rollback();
+            return $e->getMessage();
+            //throw  new  \Exception("Can not create  user. Database error: " . $e->getMessage());
+        }
     }
 }

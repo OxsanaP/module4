@@ -169,9 +169,28 @@ a.control_next {
 
 .ads-row {
     border: 1px lightgrey solid;
+    border-radius: 10px;
     padding: 2px;
     margin: 1px;
 }
 .ads-row .cupon {
     display: none;
+}
+.model-message{
+    margin: 1px;
+    font-style: italic;
+    border-radius: 25px;
+    padding: 2px;
+    padding-left: 10px;
+}
+.comment-top{
+    margin: 1px;
+    border: 1px lightgrey solid;
+    border-radius: 10px;
+    padding: 2px;
+
+}
+
+.comment-top h4{
+    font-size: 15px;
 }

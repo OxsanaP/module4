@@ -6,10 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/datepicker.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
+
     <script src="/js/jquery.min.js"></script>
     <script src="/js/auto-complete.min.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
     <title>Главная</title>
 
 </head>
@@ -21,22 +24,7 @@
                 <h2><?php echo $this->getHeaderTitle(); ?></h2>
             <?php endif; ?>
         </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="./">Home</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                   aria-expanded="false">Dropdown <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                </ul>
-            </li>
-        </ul>
+
         <?php if ($this->isLogined()) : ?>
             <p class="navbar-text navbar-right">
                 Signed in as <?php echo $this->getCurrentUserName() ?>
@@ -49,7 +37,8 @@
         <?php endif; ?>
         <form class="navbar-form navbar-right" role="search">
             <div class="form-group">
-                <input autocomplete="off" name="q" type="text" class="form-control" placeholder="Search">
+                <input autocomplete="off" name="q" type="text" class="form-control" placeholder="Search by tags">
+                </br><a href="/category/advaced" class="navbar-link">Advanced search</a>
             </div>
         </form>
 
@@ -64,7 +53,7 @@
     <div class="row">
         <div class="col-md-2">
             <?php if ($top = $this->getTop()) : ?>
-                <div class="row">
+                <div class="row comment-top">
                     <div class="col-md-12">
                         <h4>Top Commentators</h4>
                         <?php foreach ($top as $commentator) : ?>
@@ -97,7 +86,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Sing in</h4>
             </div>
             <form class="form-horizontal" action="/user/login" method="post">
                 <div class="modal-body">
@@ -120,6 +109,13 @@
                                 <label>
                                     <input type="checkbox" name="remember-me"> Remember me
                                 </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <div class="checkbox">
+                                <a href="/user/register">Register</a>
                             </div>
                         </div>
                     </div>
@@ -158,7 +154,7 @@
 
     mouseout
 </script>
-
+<?php include ('subscribe.php'); ?>
 <div class="footer">
     <div class="navbar navbar-default navbar-fixed-bottom row-fluid">
         <div class="container-fluid">

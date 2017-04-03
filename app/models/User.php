@@ -52,7 +52,7 @@ class User extends AbstractModel
         if ($this->_is_authorized) {
             return $this->_is_authorized;
         }
-        $sql = "select id, username from users where
+        $sql = "select id, username, role from users where
             email = :email and password = :password";
 
         $salt = $this->getSalt($email);
@@ -85,6 +85,7 @@ class User extends AbstractModel
         if (!empty($_SESSION["user_id"])) {
             unset($_SESSION["user_id"]);
             unset($_SESSION["user_name"]);
+            unset($_SESSION["role"]);
         }
     }
 
@@ -92,6 +93,7 @@ class User extends AbstractModel
     {
         $_SESSION["user_id"] = $this->_user_id;
         $_SESSION["user_name"] = $this->_user['username'];
+        $_SESSION["role"] = $this->_user['role'];
         if ($remember) {
             // Save session id in cookies
             $sid = session_id();
@@ -105,12 +107,12 @@ class User extends AbstractModel
         }
     }
 
-    public function create($email, $password)
+    public function create($email, $password, $userName)
     {
         if ($this->getSalt($email)) {
-            throw new \Exception("User exists: " . $email);
+            return "User exists: " . $email;
         }
-        $allowed = array("salt", "password", "email"); // allowed fields
+        $allowed = array("salt", "password", "email", "username"); // allowed fields
         $hashes = $this->passwordHash($password);
         try {
             $this->getConnection()->beginTransaction();
@@ -118,13 +120,14 @@ class User extends AbstractModel
                 'email' => $email,
                 'password' => $hashes['hash'],
                 'salt' => $hashes['salt'],
+                'username' => $userName
             );
             $result = $this->insert($allowed, $values);
             $this->getConnection()->commit();
+            return true;
         } catch (\PDOException $e) {
             $this->getConnection()->rollback();
-            throw  new  \Exception("Can not create  user. Database error: " . $e->getMessage());
+            return "Can not create  user. Database error: " . $e->getMessage();
         }
-        return $this;
     }
 }

@@ -24,4 +24,10 @@ class Tag extends AbstractModel
         $params = array('name' => '%' . $name . '%');
         return $this->query($sql, $params);
     }
+
+    public function getAllTags()
+    {
+        $sql = "SELECT * FROM {$this->_tableName}";
+        return $this->query($sql);
+    }
 }

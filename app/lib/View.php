@@ -97,6 +97,11 @@ class View
         return $this->getSession()->getErrorMessage();
     }
 
+    public function getSuccessMessage()
+    {
+        return $this->getSession()->getSuccessMessage();
+    }
+
     public function isLogined()
     {
         return $this->getSession()->isLogined();

@@ -19,8 +19,6 @@ class UserController extends Controller
 
     public function loginAction()
     {
-        $user = new User();
-        //$user->create('a@a.com', '123');
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             $this->redirectTo405();
             return;
@@ -56,6 +54,34 @@ class UserController extends Controller
         $this->redirect($url);
         return;
     }
+
+    public function registerAction()
+    {
+        $this->setHeaderTitle('Register');
+        $this->_view->render('user/register');
+    }
+
+    public function addpostAction()
+    {
+        $username = $this->getRequest()->getParam('username', false);
+        $email = $this->getRequest()->getParam('email', false);
+        $password = $this->getRequest()->getParam('password', false);
+
+        if (!$username || !$email || !$password) {
+            $this->getSession()->setErrorMessage("Please fill all field.");
+            $this->redirect("/user/register");
+            return;
+        }
+        $user = new User();
+        $res = $user->create($email, $password, $username);
+        if (true === $res){
+            $this->getSession()->setSuccesMessage('Поздравляемю Вы успешно зарегистрировались.');
+            $this->redirect("/");
+        }
+        $this->getSession()->setErrorMessage($res);
+        $this->redirect("/user/register");
+    }
+
 
     public function commentAction()
     {
